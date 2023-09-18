@@ -1,7 +1,13 @@
 library app_manager;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+// App Manager
+export 'src/widget/extension.dart';
+export 'src/widget/scope.dart';
+export 'src/widget/inherited.dart';
+
+// Core
+export 'src/core/core.dart';
+
+// Utils
+export 'src/utils/utils.dart';
+export 'src/utils/theme.dart';
