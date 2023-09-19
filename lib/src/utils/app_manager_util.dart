@@ -5,5 +5,5 @@ abstract class AppManagerUtil {
 
   String get systemMode;
 
-  final Future<void> Function() onSystemChange;
+  final void Function() onSystemChange;
 }

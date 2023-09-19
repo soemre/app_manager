@@ -14,7 +14,7 @@ class AppManagerThemeUtil extends AppManagerUtil with WidgetsBindingObserver {
 
   @override
   Future<void> didChangePlatformBrightness() async {
-    await onSystemChange();
+    onSystemChange();
     super.didChangePlatformBrightness();
   }
 }

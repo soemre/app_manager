@@ -27,6 +27,7 @@ class _AppManagerScopeState extends State<AppManagerScope> {
   void _initManagers() {
     if (widget.cores == null) return;
     for (AppManagerCore core in widget.cores!) {
+      core.init();
       core.addListener(() => setState(() {}));
     }
   }
