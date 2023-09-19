@@ -5,7 +5,7 @@ import 'inherited.dart';
 
 class AppManagerScope extends StatefulWidget {
   final Widget child;
-  final List? cores;
+  final List<AppManagerCore>? cores;
 
   const AppManagerScope({
     super.key,
@@ -21,6 +21,7 @@ class _AppManagerScopeState extends State<AppManagerScope> {
   @override
   void initState() {
     _initManagers();
+    _initCores();
     super.initState();
   }
 
@@ -32,8 +33,8 @@ class _AppManagerScopeState extends State<AppManagerScope> {
     }
   }
 
-  Map<String, AppManagerCore> get _getCores {
-    if (widget.cores == null) return {};
+  void _initCores() {
+    if (widget.cores == null) return;
 
     final Map<String, AppManagerCore> cores = {};
 
@@ -41,13 +42,17 @@ class _AppManagerScopeState extends State<AppManagerScope> {
       cores.addAll({core.name: core});
     }
 
-    return cores;
+    setState(() {
+      _cores = cores;
+    });
   }
+
+  late final Map<String, AppManagerCore> _cores;
 
   @override
   Widget build(BuildContext context) {
     return AppManager(
-      cores: _getCores,
+      cores: _cores,
       child: widget.child,
     );
   }

@@ -11,7 +11,7 @@ class AppManagerCore<T> extends ChangeNotifier {
     String defaultMode = "default",
   }) : _models = models {
     // Create the util.
-    _util = util?.create(() => _onSystemChange());
+    _util ??= util?.create(() => _onSystemChange());
 
     // Configure the default mode.
     _defaultMode = _util != null ? "system" : defaultMode;
@@ -21,6 +21,12 @@ class AppManagerCore<T> extends ChangeNotifier {
 
     // The default mode must exist in the models map as key.
     if (util == null) assert(models.containsKey(_defaultMode));
+  }
+
+  @override
+  void dispose() {
+    _util?.dispose();
+    super.dispose();
   }
 
   /// Name of the core.
@@ -112,9 +118,9 @@ class AppManagerCore<T> extends ChangeNotifier {
   }
 
   /// Notify the listeners when the system's raw mode changes.
-  void _onSystemChange() async {
+  void _onSystemChange() {
     // There is no need to notify if the current mode is system.
-    if (_isSystem) return;
+    if (!_isSystem) return;
 
     // Notify
     notifyListeners();

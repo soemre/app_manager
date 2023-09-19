@@ -13,8 +13,19 @@ class AppManagerThemeUtil extends AppManagerUtil with WidgetsBindingObserver {
           : "light";
 
   @override
-  Future<void> didChangePlatformBrightness() async {
+  void didChangePlatformBrightness() {
     onSystemChange();
     super.didChangePlatformBrightness();
+  }
+
+  @override
+  void init() {
+    // Adds Widgets Binding Observer
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
   }
 }
