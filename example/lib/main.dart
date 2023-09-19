@@ -22,7 +22,7 @@ class App extends StatelessWidget {
 
 List<AppManagerCore> get _cores => [
       AppManagerCore<ThemeModel>(
-        name: "theme",
+        coreKey: AppCores.theme,
         util: AppManagerUtils.theme,
         models: {
           "light":
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-          (context.cores["theme"]!.current as ThemeModel).backgroundColor,
+          context.core<ThemeModel>(AppCores.theme).current.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Center(
@@ -66,8 +66,10 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
-                  color:
-                      (context.cores["theme"]!.current as ThemeModel).textColor,
+                  color: context
+                      .core<ThemeModel>(AppCores.theme)
+                      .current
+                      .textColor,
                 ),
               ),
               const SizedBox(height: 16),
@@ -77,9 +79,10 @@ class HomePage extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          (context.cores["theme"]!.current as ThemeModel)
-                              .textColor),
+                      backgroundColor: MaterialStatePropertyAll(context
+                          .core<ThemeModel>(AppCores.theme)
+                          .current
+                          .textColor),
                       padding: const MaterialStatePropertyAll(
                         EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                       ),
@@ -100,8 +103,9 @@ class HomePage extends StatelessWidget {
                                 fontSize: 16,
                               ),
                             ),
-                            onTap: () =>
-                                context.cores["theme"]!.changeMode("system"),
+                            onTap: () => context
+                                .core<ThemeModel>(AppCores.theme)
+                                .changeMode("system"),
                           ),
                           ListTile(
                             title: const Text(
@@ -112,8 +116,9 @@ class HomePage extends StatelessWidget {
                                 fontSize: 16,
                               ),
                             ),
-                            onTap: () =>
-                                context.cores["theme"]!.changeMode("light"),
+                            onTap: () => context
+                                .core<ThemeModel>(AppCores.theme)
+                                .changeMode("light"),
                           ),
                           ListTile(
                             title: const Text(
@@ -124,8 +129,9 @@ class HomePage extends StatelessWidget {
                                 fontSize: 16,
                               ),
                             ),
-                            onTap: () =>
-                                context.cores["theme"]!.changeMode("dark"),
+                            onTap: () => context
+                                .core<ThemeModel>(AppCores.theme)
+                                .changeMode("dark"),
                           ),
                           ListTile(
                             title: const Text(
@@ -136,8 +142,9 @@ class HomePage extends StatelessWidget {
                                 fontSize: 16,
                               ),
                             ),
-                            onTap: () =>
-                                context.cores["theme"]!.changeMode("custom"),
+                            onTap: () => context
+                                .core<ThemeModel>(AppCores.theme)
+                                .changeMode("custom"),
                           ),
                         ],
                       ),
@@ -148,7 +155,9 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: (context.cores["theme"]!.current as ThemeModel)
+                      color: context
+                          .core<ThemeModel>(AppCores.theme)
+                          .current
                           .backgroundColor,
                     ),
                   ),
@@ -156,12 +165,14 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                "Current Mode: ${context.cores["theme"]!.mode}${context.cores["theme"]!.mode == "system" ? " (Raw Mode: ${context.cores["theme"]!.rawMode})" : ""}",
+                "Current Mode: ${context.core<ThemeModel>(AppCores.theme).mode}${context.core<ThemeModel>(AppCores.theme).mode == "system" ? " (Raw Mode: ${context.core<ThemeModel>(AppCores.theme).rawMode})" : ""}",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color:
-                      (context.cores["theme"]!.current as ThemeModel).textColor,
+                  color: context
+                      .core<ThemeModel>(AppCores.theme)
+                      .current
+                      .textColor,
                 ),
               ),
             ],
@@ -170,4 +181,8 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+enum AppCores {
+  theme,
 }

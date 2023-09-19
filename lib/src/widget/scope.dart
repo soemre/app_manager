@@ -1,4 +1,5 @@
 import 'package:app_manager/src/core/core.dart';
+import 'package:app_manager/src/core/types.dart';
 import 'package:flutter/material.dart';
 
 import 'inherited.dart';
@@ -36,18 +37,14 @@ class _AppManagerScopeState extends State<AppManagerScope> {
   void _initCores() {
     if (widget.cores == null) return;
 
-    final Map<String, AppManagerCore> cores = {};
-
-    for (AppManagerCore core in widget.cores!) {
-      cores.addAll({core.name: core});
-    }
-
     setState(() {
-      _cores = cores;
+      for (AppManagerCore core in widget.cores!) {
+        _cores.addAll({core.coreKey: core});
+      }
     });
   }
 
-  late final Map<String, AppManagerCore> _cores;
+  final AppManagerCoreMap _cores = {};
 
   @override
   Widget build(BuildContext context) {

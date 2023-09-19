@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AppManagerCore<T> extends ChangeNotifier {
   AppManagerCore({
-    required this.name,
+    required this.coreKey,
     required Map<String, T> models,
     AppManagerUtils? util,
     String defaultMode = "default",
@@ -29,10 +29,10 @@ class AppManagerCore<T> extends ChangeNotifier {
     super.dispose();
   }
 
-  /// Name of the core.
+  /// Key of the core.
   ///
   /// It will be used as key when accessing the cores of the app manager.
-  final String name;
+  final Enum coreKey;
 
   /// The util of the core.
   ///
@@ -43,7 +43,7 @@ class AppManagerCore<T> extends ChangeNotifier {
   late final String _defaultMode;
 
   /// The key to be store the app's current mode in the local storage with Shared Preferences.
-  String get _prefsKey => "app_manager_core_$name";
+  String get _prefsKey => "app_manager_core_${coreKey.name}";
 
   /// Initialize the core's mode with the stored preferences.
   ///

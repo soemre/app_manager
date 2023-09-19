@@ -5,5 +5,6 @@ import 'package:flutter/material.dart';
 extension AppSettings on BuildContext {
   AppManager get _appManager => AppManager.of(this);
 
-  Map<String, AppManagerCore> get cores => _appManager.cores;
+  AppManagerCore<T> core<T>(Enum core) =>
+      _appManager.cores[core]! as AppManagerCore<T>;
 }
