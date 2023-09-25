@@ -3,19 +3,13 @@ import 'package:app_manager/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
-  AppManagerCore({
-    required this.coreKey,
-    required Map<E, T> models,
-    AppManagerUtils? util,
-    bool overrideSystem = false,
-    required E defaultMode,
-  }) : _models = models {
+abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
+  AppManagerCore() {
     // Create the util.
     _util ??= util?.create(() => _onSystemChange());
 
     // Assign Default Mode
-    assert(_models.containsKey(defaultMode) && defaultMode.name != "system");
+    assert(models.containsKey(defaultMode) && defaultMode.name != "system");
     _defaultMode = defaultMode;
 
     // If the util parameter is set, `system` key must exist.
@@ -49,10 +43,16 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
 
   late final E _defaultMode;
 
+  AppManagerUtils? get util;
+
+  E get defaultMode;
+
+  bool get overrideSystem => false;
+
   /// Key of the core.
   ///
   /// It will be used as key when accessing the cores of the app manager.
-  final Enum coreKey;
+  Enum get coreKey;
 
   /// The util of the core.
   ///
@@ -88,14 +88,14 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
     // Change the current mode to default mode.
     if (!_isModeUsable(_mode)) {
       // The default mode must be exist in the models map as a key.
-      assert(_models.containsKey(_mainMode));
+      assert(models.containsKey(_mainMode));
 
       changeMode(_mainMode);
       return _mainModel;
     }
 
     // If the current key exists in the model map, return it.
-    return _models[_mode]!;
+    return models[_mode]!;
   }
 
   // Current Mode
@@ -118,7 +118,7 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   ///
   /// Throws if the given mode doesn't exists in the models map.
   Future<void> changeMode(E mode, [bool saveChanges = true]) async {
-    if (!_models.containsKey(mode)) {
+    if (!models.containsKey(mode)) {
       throw "The given mode doesn't exists in the models map.";
     }
 
@@ -166,7 +166,7 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   /// Returns the system model from the models map.
   ///
   /// The models with the raw system keys must be exists in the models map.
-  T get _systemModel => _models[_systemMode]!;
+  T get _systemModel => models[_systemMode]!;
 
   /// Returns the default model of the current core.
   ///
@@ -175,21 +175,21 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   /// If the core doesn't have an util, it will return the model with the `default` key.
   /// That means it must be exists when the util is not set.
   T get _mainModel =>
-      _mainMode == _systemModeEnum ? _systemModel : _models[_mainMode]!;
+      _mainMode == _systemModeEnum ? _systemModel : models[_mainMode]!;
 
   E? _stringToMode(String? string) {
     if (string == null) return null;
     try {
-      return _models.keys.firstWhere((m) => m.name == string);
+      return models.keys.firstWhere((m) => m.name == string);
     } catch (_) {
       return null;
     }
   }
 
-  bool _isModeUsable(E? mode) => mode != null && _models.containsKey(mode);
+  bool _isModeUsable(E? mode) => mode != null && models.containsKey(mode);
 
   /// Models Map
   ///
   /// String to Given Model Type
-  final Map<E, T> _models;
+  Map<E, T> get models;
 }
