@@ -25,7 +25,6 @@ List<AppManagerCore> get _cores => [
         coreKey: AppCores.theme,
         util: AppManagerUtils.theme,
         defaultMode: AppThemes.dark,
-        overrideSystem: true,
         models: {
           AppThemes.system:
               ThemeModel(backgroundColor: Colors.red, textColor: Colors.white),

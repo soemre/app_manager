@@ -80,7 +80,6 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO
   /// Returns the current model of the core.
   T get current {
     if (_isCurrentSystem) return _systemModel;
@@ -175,8 +174,8 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   ///
   /// If the core doesn't have an util, it will return the model with the `default` key.
   /// That means it must be exists when the util is not set.
-  T get _mainModel => _isCurrentSystem ? _systemModel : _models[_mainMode]!;
-  // TODO
+  T get _mainModel =>
+      _mainMode == _systemModeEnum ? _systemModel : _models[_mainMode]!;
 
   E? _stringToMode(String? string) {
     if (string == null) return null;
