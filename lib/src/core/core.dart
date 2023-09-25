@@ -8,30 +8,35 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
     required this.coreKey,
     required Map<E, T> models,
     AppManagerUtils? util,
-    E? defaultMode,
+    bool overrideSystem = false,
+    required E defaultMode,
   }) : _models = models {
     // Create the util.
     _util ??= util?.create(() => _onSystemChange());
 
-    // Configure the default mode.
-    if (defaultMode == null) {
-      final String defkey = _util != null ? "system" : "default";
-      defaultMode = _stringToMode(defkey);
-      assert(
-        defaultMode != null,
-        "An enum with $defkey value is not set as a key in the models map.",
-      );
-    } else {
-      assert(
-        _models.containsKey(defaultMode),
-        "The $defaultMode is not set as a key in the models map.",
-      );
+    // Assign Default Mode
+    assert(_models.containsKey(defaultMode) && defaultMode.name != "system");
+    _defaultMode = defaultMode;
+
+    // If the util parameter is set, `system` key must exist.
+    if (_util != null) {
+      final E? tempKey = _stringToMode("system");
+      assert(tempKey != null,
+          "System key must exist when the util parameter is set.");
+      _systemModeEnum = tempKey!;
     }
 
-    _defaultMode = defaultMode!;
+    // Configure main mode.
+    if (_util == null || overrideSystem) {
+      _mainMode = _defaultMode;
+    } else {
+      _mainMode = _stringToMode("system")!;
+    }
+
+    assert(_isModeUsable(_mainMode));
 
     // Configure the current mode. It will be redefined in the init function again.
-    _mode = _defaultMode;
+    _mode = _mainMode;
   }
 
   @override
@@ -39,6 +44,10 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
     _util?.dispose();
     super.dispose();
   }
+
+  late final E _systemModeEnum;
+
+  late final E _defaultMode;
 
   /// Key of the core.
   ///
@@ -50,7 +59,7 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   /// Util is optional. But if it is set the `system` keyword should be used as a key of the models map.
   AppManagerUtil? _util;
 
-  late final E _defaultMode;
+  late final E _mainMode;
 
   /// The key to be store the app's current mode in the local storage with Shared Preferences.
   String get _prefsKey => "app_manager_core_${coreKey.name}";
@@ -63,8 +72,7 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
     final E? localMode = _stringToMode(prefs.getString(_prefsKey));
 
     if (!_isModeUsable(localMode)) {
-      assert(_models.containsKey(_defaultMode));
-      await changeMode(_defaultMode);
+      await changeMode(_mainMode);
     } else {
       await changeMode(localMode!, false);
     }
@@ -72,18 +80,19 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
     notifyListeners();
   }
 
+  // TODO
   /// Returns the current model of the core.
   T get current {
     if (_isCurrentSystem) return _systemModel;
 
     // If the current key doesn't exist in the models map.
     // Change the current mode to default mode.
-    if (!_models.containsKey(_mode)) {
+    if (!_isModeUsable(_mode)) {
       // The default mode must be exist in the models map as a key.
-      assert(_models.containsKey(_defaultMode));
+      assert(_models.containsKey(_mainMode));
 
-      changeMode(_defaultMode);
-      return _defaultModel;
+      changeMode(_mainMode);
+      return _mainModel;
     }
 
     // If the current key exists in the model map, return it.
@@ -139,7 +148,7 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   bool get _isCurrentSystem => _isSystem(_mode);
 
   bool _isSystem(E mode) {
-    return _util != null && mode == _defaultMode;
+    return _util != null && mode == _systemModeEnum;
   }
 
   /// Returns raw system keys.
@@ -148,8 +157,7 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   E get _systemMode {
     final mode = _stringToMode(_util!.systemMode);
 
-    if (_isModeUsable(mode)) {
-      // TODO
+    if (!_isModeUsable(mode)) {
       return _defaultMode;
     }
 
@@ -167,8 +175,8 @@ class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   ///
   /// If the core doesn't have an util, it will return the model with the `default` key.
   /// That means it must be exists when the util is not set.
-  T get _defaultModel =>
-      _isCurrentSystem ? _systemModel : _models[_defaultMode]!;
+  T get _mainModel => _isCurrentSystem ? _systemModel : _models[_mainMode]!;
+  // TODO
 
   E? _stringToMode(String? string) {
     if (string == null) return null;
