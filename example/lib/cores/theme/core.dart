@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../app_cores_enum.dart';
 import 'model.dart';
 
-class AppThemeCore extends AppManagerCore {
+class AppThemeCore extends AppManagerCore<AppThemes, ThemeModel> {
   @override
   Enum get coreKey => AppCores.theme;
 
   @override
-  Enum get defaultMode => AppThemes.dark;
+  AppThemes get defaultMode => AppThemes.dark;
 
   @override
-  Map<Enum, dynamic> get models => {
+  Map<AppThemes, ThemeModel> get models => {
         AppThemes.system:
             ThemeModel(backgroundColor: Colors.red, textColor: Colors.white),
         AppThemes.light:
