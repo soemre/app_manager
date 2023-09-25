@@ -5,6 +5,6 @@ import 'package:flutter/material.dart';
 extension AppSettings on BuildContext {
   AppManager get _appManager => AppManager.of(this);
 
-  AppManagerCore<T> core<T>(Enum core) =>
-      _appManager.cores[core]! as AppManagerCore<T>;
+  AppManagerCore<E, T> core<E extends Enum, T>(Enum core) =>
+      _appManager.cores[core]! as AppManagerCore<E, T>;
 }

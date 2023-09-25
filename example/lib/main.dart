@@ -21,19 +21,28 @@ class App extends StatelessWidget {
 }
 
 List<AppManagerCore> get _cores => [
-      AppManagerCore<ThemeModel>(
+      AppManagerCore<AppThemes, ThemeModel>(
         coreKey: AppCores.theme,
         util: AppManagerUtils.theme,
         models: {
-          "light":
+          AppThemes.system:
+              ThemeModel(backgroundColor: Colors.red, textColor: Colors.white),
+          AppThemes.light:
               ThemeModel(backgroundColor: Colors.white, textColor: Colors.blue),
-          "dark": ThemeModel(
+          AppThemes.dark: ThemeModel(
               backgroundColor: Colors.black, textColor: Colors.white),
-          "custom":
+          AppThemes.custom:
               ThemeModel(backgroundColor: Colors.blue, textColor: Colors.white),
         },
       ),
     ];
+
+enum AppThemes {
+  system,
+  light,
+  dark,
+  custom;
+}
 
 class ThemeModel {
   final Color backgroundColor;
@@ -53,8 +62,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          context.core<ThemeModel>(AppCores.theme).current.backgroundColor,
+      backgroundColor: context
+          .core<AppThemes, ThemeModel>(AppCores.theme)
+          .current
+          .backgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Center(
@@ -67,7 +78,7 @@ class HomePage extends StatelessWidget {
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
                   color: context
-                      .core<ThemeModel>(AppCores.theme)
+                      .core<AppThemes, ThemeModel>(AppCores.theme)
                       .current
                       .textColor,
                 ),
@@ -80,7 +91,7 @@ class HomePage extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(context
-                          .core<ThemeModel>(AppCores.theme)
+                          .core<AppThemes, ThemeModel>(AppCores.theme)
                           .current
                           .textColor),
                       padding: const MaterialStatePropertyAll(
@@ -104,8 +115,8 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             onTap: () => context
-                                .core<ThemeModel>(AppCores.theme)
-                                .changeMode("system"),
+                                .core<AppThemes, ThemeModel>(AppCores.theme)
+                                .changeMode(AppThemes.system),
                           ),
                           ListTile(
                             title: const Text(
@@ -117,8 +128,8 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             onTap: () => context
-                                .core<ThemeModel>(AppCores.theme)
-                                .changeMode("light"),
+                                .core<AppThemes, ThemeModel>(AppCores.theme)
+                                .changeMode(AppThemes.light),
                           ),
                           ListTile(
                             title: const Text(
@@ -130,8 +141,8 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             onTap: () => context
-                                .core<ThemeModel>(AppCores.theme)
-                                .changeMode("dark"),
+                                .core<AppThemes, ThemeModel>(AppCores.theme)
+                                .changeMode(AppThemes.dark),
                           ),
                           ListTile(
                             title: const Text(
@@ -143,8 +154,8 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             onTap: () => context
-                                .core<ThemeModel>(AppCores.theme)
-                                .changeMode("custom"),
+                                .core<AppThemes, ThemeModel>(AppCores.theme)
+                                .changeMode(AppThemes.custom),
                           ),
                         ],
                       ),
@@ -156,7 +167,7 @@ class HomePage extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: context
-                          .core<ThemeModel>(AppCores.theme)
+                          .core<AppThemes, ThemeModel>(AppCores.theme)
                           .current
                           .backgroundColor,
                     ),
@@ -165,12 +176,12 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                "Current Mode: ${context.core<ThemeModel>(AppCores.theme).mode}${context.core<ThemeModel>(AppCores.theme).mode == "system" ? " (Raw Mode: ${context.core<ThemeModel>(AppCores.theme).rawMode})" : ""}",
+                "Current Mode: ${context.core<AppThemes, ThemeModel>(AppCores.theme).mode.name}${context.core<AppThemes, ThemeModel>(AppCores.theme).mode == AppThemes.system ? " (Raw Mode: ${context.core<AppThemes, ThemeModel>(AppCores.theme).rawMode.name})" : ""}",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: context
-                      .core<ThemeModel>(AppCores.theme)
+                      .core<AppThemes, ThemeModel>(AppCores.theme)
                       .current
                       .textColor,
                 ),
