@@ -8,6 +8,9 @@ export 'src/widget/inherited.dart';
 // Core
 export 'src/core/core.dart';
 
+// Style Core
+export 'src/style/style.dart';
+
 // Utils
 export 'src/utils/utils.dart';
 export 'src/utils/theme.dart';

@@ -1,5 +1,6 @@
 import 'package:app_manager_example/cores/cores_extension.dart';
 import 'package:app_manager_example/cores/theme/core.dart';
+import 'package:app_manager_example/styles/cores_extension.dart';
 import 'package:draggable_menu/draggable_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +19,7 @@ class HomePage extends StatelessWidget {
             children: [
               Text(
                 'App Manager',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: context.themeCore.current.textColor,
-                ),
+                style: context.textStyle.title,
               ),
               const SizedBox(height: 16),
 
@@ -32,7 +29,8 @@ class HomePage extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(
-                          context.themeCore.current.textColor),
+                        context.themeCore.current.buttonColor,
+                      ),
                       padding: const MaterialStatePropertyAll(
                         EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                       ),
@@ -45,49 +43,33 @@ class HomePage extends StatelessWidget {
                       child: Column(
                         children: [
                           ListTile(
-                            title: const Text(
+                            title: Text(
                               "System",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                              style: context.textStyle.text,
                             ),
                             onTap: () =>
                                 context.themeCore.changeMode(AppThemes.system),
                           ),
                           ListTile(
-                            title: const Text(
+                            title: Text(
                               "Light",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                              style: context.textStyle.text,
                             ),
                             onTap: () =>
                                 context.themeCore.changeMode(AppThemes.light),
                           ),
                           ListTile(
-                            title: const Text(
+                            title: Text(
                               "Dark",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                              style: context.textStyle.text,
                             ),
                             onTap: () =>
                                 context.themeCore.changeMode(AppThemes.dark),
                           ),
                           ListTile(
-                            title: const Text(
+                            title: Text(
                               "Custom",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                              style: context.textStyle.text,
                             ),
                             onTap: () =>
                                 context.themeCore.changeMode(AppThemes.custom),
@@ -98,22 +80,14 @@ class HomePage extends StatelessWidget {
                   ),
                   child: Text(
                     "Change Mode",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: context.themeCore.current.backgroundColor,
-                    ),
+                    style: context.textStyle.buttonText,
                   ),
                 ),
               ),
               const SizedBox(height: 16),
               Text(
                 "Current Mode: ${context.themeCore.mode.name}${context.themeCore.mode == AppThemes.system ? " (Raw Mode: ${context.themeCore.rawMode.name})" : ""}",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: context.themeCore.current.textColor,
-                ),
+                style: context.textStyle.text,
               ),
             ],
           ),
