@@ -1,6 +1,5 @@
 import 'package:app_manager/app_manager.dart';
-import 'package:app_manager_example/cores/theme/core.dart';
-import 'package:app_manager_example/styles/text_styles.dart';
+import 'package:app_manager_example/app_manager/config.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
@@ -15,21 +14,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppManagerScope(
-      cores: _cores,
-      styles: _styles,
+      config: ManagerConfig(),
       child: const MaterialApp(
         home: HomePage(),
       ),
     );
   }
-
-  /// App Cores
-  List<AppManagerCore> get _cores => [
-        AppThemeCore(),
-      ];
-
-  /// App Style Cores
-  List<AppManagerStyleCore> get _styles => [
-        TextStyles(),
-      ];
 }

@@ -1,6 +1,5 @@
-import 'package:app_manager_example/cores/cores_extension.dart';
-import 'package:app_manager_example/cores/theme/core.dart';
-import 'package:app_manager_example/styles/cores_extension.dart';
+import 'package:app_manager_example/app_manager/app_manager.gr.dart';
+import 'package:app_manager_example/app_manager/cores/theme_core.dart';
 import 'package:draggable_menu/draggable_menu.dart';
 import 'package:flutter/material.dart';
 

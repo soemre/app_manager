@@ -1,9 +1,8 @@
 import 'package:app_manager/app_manager.dart';
+import 'package:app_manager_example/app_manager/app_manager.gr.dart';
 import 'package:flutter/material.dart';
-import '../app_cores_enum.dart';
-import 'model.dart';
 
-class AppThemeCore extends AppManagerCore<AppThemes, ThemeModel> {
+class ThemeCore extends AppManagerCore<AppThemes, ThemeModel> {
   @override
   Enum get coreKey => AppCores.theme;
 
@@ -47,4 +46,18 @@ enum AppThemes {
   light,
   dark,
   custom;
+}
+
+class ThemeModel {
+  final Color backgroundColor;
+  final Color textColor;
+  final Color buttonColor;
+  final Color buttonTextColor;
+
+  ThemeModel({
+    required this.backgroundColor,
+    required this.textColor,
+    required this.buttonColor,
+    required this.buttonTextColor,
+  });
 }

@@ -1,3 +1,0 @@
-enum AppStyleCores {
-  text,
-}

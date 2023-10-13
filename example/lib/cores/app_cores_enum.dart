@@ -1,3 +1,0 @@
-enum AppCores {
-  theme,
-}

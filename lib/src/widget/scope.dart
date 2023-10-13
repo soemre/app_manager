@@ -1,18 +1,19 @@
-import 'package:app_manager/app_manager.dart';
+import 'package:app_manager/src/config/config.dart';
+import 'package:app_manager/src/core/core.dart';
 import 'package:app_manager/src/core/types.dart';
+import 'package:app_manager/src/style/style.dart';
 import 'package:app_manager/src/style/types.dart';
+import 'package:app_manager/src/widget/inherited.dart';
 import 'package:flutter/material.dart';
 
 class AppManagerScope extends StatefulWidget {
   final Widget child;
-  final List<AppManagerCore>? cores;
-  final List<AppManagerStyleCore>? styles;
+  final AppManagerConfig config;
 
   const AppManagerScope({
     super.key,
     required this.child,
-    this.cores,
-    this.styles,
+    required this.config,
   });
 
   @override
@@ -28,10 +29,10 @@ class _AppManagerScopeState extends State<AppManagerScope> {
   }
 
   void _initCores() {
-    if (widget.cores == null) return;
+    if (widget.config.cores == null) return;
 
     setState(() {
-      for (AppManagerCore core in widget.cores!) {
+      for (AppManagerCore core in widget.config.cores!) {
         core.init();
         core.addListener(() => setState(() {}));
         _cores.addAll({core.coreKey: core});
@@ -40,10 +41,10 @@ class _AppManagerScopeState extends State<AppManagerScope> {
   }
 
   void _initStyleCores() {
-    if (widget.styles == null) return;
+    if (widget.config.styles == null) return;
 
     setState(() {
-      for (AppManagerStyleCore style in widget.styles!) {
+      for (AppManagerStyleCore style in widget.config.styles!) {
         style.init(
           cores: _cores,
         );
