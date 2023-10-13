@@ -15,3 +15,6 @@ export 'src/style/style.dart';
 // Utils
 export 'src/utils/utils.dart';
 export 'src/utils/theme.dart';
+
+// Annotations
+export 'src/annotations/export.dart';

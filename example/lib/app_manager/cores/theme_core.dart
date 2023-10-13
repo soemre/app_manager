@@ -2,6 +2,7 @@ import 'package:app_manager/app_manager.dart';
 import 'package:app_manager_example/app_manager/app_manager.gr.dart';
 import 'package:flutter/material.dart';
 
+@ManagerCore("theme")
 class ThemeCore extends AppManagerCore<AppThemes, ThemeModel> {
   @override
   Enum get coreKey => AppCores.theme;
