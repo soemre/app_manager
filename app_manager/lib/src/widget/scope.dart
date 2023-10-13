@@ -35,7 +35,7 @@ class _AppManagerScopeState extends State<AppManagerScope> {
       for (AppManagerCore core in widget.config.cores!) {
         core.init();
         core.addListener(() => setState(() {}));
-        _cores.addAll({core.coreKey: core});
+        _cores.addAll({core.runtimeType: core});
       }
     });
   }
@@ -48,7 +48,7 @@ class _AppManagerScopeState extends State<AppManagerScope> {
         style.init(
           cores: _cores,
         );
-        _styles.addAll({style.coreKey: style});
+        _styles.addAll({style.runtimeType: style});
       }
     });
   }

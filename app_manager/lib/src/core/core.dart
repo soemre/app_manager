@@ -1,5 +1,5 @@
+import 'package:app_manager/app_manager.dart';
 import 'package:app_manager/src/utils/app_manager_util.dart';
-import 'package:app_manager/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,11 +49,6 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
 
   bool get overrideSystem => false;
 
-  /// Key of the core.
-  ///
-  /// It will be used as key when accessing the cores of the app manager.
-  Enum get coreKey;
-
   /// The util of the core.
   ///
   /// Util is optional. But if it is set the `system` keyword should be used as a key of the models map.
@@ -62,7 +57,7 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   late final E _mainMode;
 
   /// The key to be store the app's current mode in the local storage with Shared Preferences.
-  String get _prefsKey => "app_manager_core_${coreKey.name}";
+  String get _prefsKey => "app_manager_core_$runtimeType";
 
   /// Initialize the core's mode with the stored preferences.
   ///

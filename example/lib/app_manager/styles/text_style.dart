@@ -1,14 +1,10 @@
 import 'package:app_manager/app_manager.dart';
-import 'package:app_manager_example/app_manager/app_manager.gr.dart';
 import 'package:app_manager_example/app_manager/cores/theme_core.dart';
 import 'package:flutter/material.dart';
 
-@ManagerStyleCore("text")
+@ManagerCore("text")
 class TextStyleCore extends AppManagerStyleCore {
-  @override
-  Enum get coreKey => AppStyleCores.text;
-
-  ThemeModel get theme => core<AppThemes, ThemeModel>(AppCores.theme).current;
+  ThemeModel get theme => core<ThemeCore>().current;
 
   TextStyle get title => TextStyle(
         color: theme.textColor,

@@ -1,4 +1,5 @@
-import 'package:app_manager/app_manager.dart';
+import 'package:app_manager/src/core/core.dart';
+import 'package:app_manager/src/style/style.dart';
 
 /// Config of the `AppManagerScope` widget.
 ///

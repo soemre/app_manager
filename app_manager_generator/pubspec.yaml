@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   source_gen: ^1.4.0
+  app_manager:
+    path: ../app_manager
 
 dev_dependencies:
   flutter_test:

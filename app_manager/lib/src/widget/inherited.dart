@@ -1,6 +1,6 @@
 import 'package:app_manager/src/core/types.dart';
-import 'package:flutter/material.dart';
 import 'package:app_manager/src/style/types.dart';
+import 'package:flutter/material.dart';
 
 class AppManager extends InheritedWidget {
   const AppManager({

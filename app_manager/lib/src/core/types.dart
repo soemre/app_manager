@@ -1,3 +1,3 @@
-import 'package:app_manager/app_manager.dart';
+import 'package:app_manager/src/core/core.dart';
 
-typedef AppManagerCoreMap = Map<Enum, AppManagerCore>;
+typedef AppManagerCoreMap = Map<Type, AppManagerCore>;

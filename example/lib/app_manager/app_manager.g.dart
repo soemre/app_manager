@@ -5,17 +5,8 @@ import 'package:flutter/material.dart';
 
 extension AppManagerExtension on BuildContext {
   /// App Manager Text Style Core
-  TextStyleCore get textStyle => style<TextStyleCore>(AppStyleCores.text);
+  TextStyleCore get textStyle => style<TextStyleCore>();
 
   /// App Manager Theme Core
-  AppManagerCore<AppThemes, ThemeModel> get themeCore =>
-      core<AppThemes, ThemeModel>(AppCores.theme);
-}
-
-enum AppCores {
-  theme,
-}
-
-enum AppStyleCores {
-  text,
+  ThemeCore get themeCore => core<ThemeCore>();
 }
