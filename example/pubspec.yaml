@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   app_manager:
-    path: ../app_manager
+    path: ../
   draggable_menu: ^4.4.0
 
 dev_dependencies:

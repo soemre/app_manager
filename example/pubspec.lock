@@ -4,7 +4,7 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "../app_manager"
+      path: ".."
       relative: true
     source: path
     version: "0.0.1"
