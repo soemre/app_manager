@@ -1,5 +1,6 @@
-import 'package:app_manager_example/app_manager/app_manager.g.dart';
+import 'package:app_manager/app_manager.dart';
 import 'package:app_manager_example/app_manager/cores/theme_core.dart';
+import 'package:app_manager_example/app_manager/styles/text_style.dart';
 import 'package:draggable_menu/draggable_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.themeCore.current.backgroundColor,
+      backgroundColor: context.core<ThemeCore>().current.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Center(
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
             children: [
               Text(
                 'App Manager',
-                style: context.textStyle.title,
+                style: context.style<TextStyleCore>().title,
               ),
               const SizedBox(height: 16),
 
@@ -28,7 +29,7 @@ class HomePage extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(
-                        context.themeCore.current.buttonColor,
+                        context.core<ThemeCore>().current.buttonColor,
                       ),
                       padding: const MaterialStatePropertyAll(
                         EdgeInsets.symmetric(vertical: 16, horizontal: 24),
@@ -44,34 +45,38 @@ class HomePage extends StatelessWidget {
                           ListTile(
                             title: Text(
                               "System",
-                              style: context.textStyle.text,
+                              style: context.style<TextStyleCore>().menuText,
                             ),
-                            onTap: () =>
-                                context.themeCore.changeMode(AppThemes.system),
+                            onTap: () => context
+                                .core<ThemeCore>()
+                                .changeMode(AppThemes.system),
                           ),
                           ListTile(
                             title: Text(
                               "Light",
-                              style: context.textStyle.text,
+                              style: context.style<TextStyleCore>().menuText,
                             ),
-                            onTap: () =>
-                                context.themeCore.changeMode(AppThemes.light),
+                            onTap: () => context
+                                .core<ThemeCore>()
+                                .changeMode(AppThemes.light),
                           ),
                           ListTile(
                             title: Text(
                               "Dark",
-                              style: context.textStyle.text,
+                              style: context.style<TextStyleCore>().menuText,
                             ),
-                            onTap: () =>
-                                context.themeCore.changeMode(AppThemes.dark),
+                            onTap: () => context
+                                .core<ThemeCore>()
+                                .changeMode(AppThemes.dark),
                           ),
                           ListTile(
                             title: Text(
                               "Custom",
-                              style: context.textStyle.text,
+                              style: context.style<TextStyleCore>().menuText,
                             ),
-                            onTap: () =>
-                                context.themeCore.changeMode(AppThemes.custom),
+                            onTap: () => context
+                                .core<ThemeCore>()
+                                .changeMode(AppThemes.custom),
                           ),
                         ],
                       ),
@@ -79,14 +84,14 @@ class HomePage extends StatelessWidget {
                   ),
                   child: Text(
                     "Change Mode",
-                    style: context.textStyle.buttonText,
+                    style: context.style<TextStyleCore>().buttonText,
                   ),
                 ),
               ),
               const SizedBox(height: 16),
               Text(
-                "Current Mode: ${context.themeCore.mode.name}${context.themeCore.mode == AppThemes.system ? " (Raw Mode: ${context.themeCore.rawMode.name})" : ""}",
-                style: context.textStyle.text,
+                "Current Mode: ${context.core<ThemeCore>().mode.name}${context.core<ThemeCore>().mode == AppThemes.system ? " (Raw Mode: ${context.core<ThemeCore>().rawMode.name})" : ""}",
+                style: context.style<TextStyleCore>().text,
               ),
             ],
           ),

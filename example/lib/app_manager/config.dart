@@ -1,7 +1,6 @@
 import 'package:app_manager/app_manager.dart';
-
-import 'cores/theme_core.dart';
-import 'styles/text_style.dart';
+import 'package:app_manager_example/app_manager/cores/theme_core.dart';
+import 'package:app_manager_example/app_manager/styles/text_style.dart';
 
 class ManagerConfig extends AppManagerConfig {
   @override

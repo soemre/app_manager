@@ -14,5 +14,5 @@ abstract class AppManagerStyleCore {
     _cores = cores;
   }
 
-  T core<T extends AppManagerCore>() => _cores[T]! as T;
+  T core<T extends AppManagerCore>() => _cores[T] as T;
 }

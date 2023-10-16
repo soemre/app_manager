@@ -1,1 +1,0 @@
-# Flutter App Manager Generator (app_manager_generator)

@@ -11,15 +11,12 @@ dependencies:
     sdk: flutter
   app_manager:
     path: ../app_manager
-  app_manager_generator:
-    path: ../app_manager_generator
   draggable_menu: ^4.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  build_runner: ^2.4.6
 
 flutter:
   uses-material-design: true

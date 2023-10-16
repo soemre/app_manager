@@ -1,1 +1,0 @@
-library app_manager_generator;
