@@ -1,5 +1,5 @@
-import 'package:app_manager/app_manager.dart';
 import 'package:app_manager/src/utils/app_manager_util.dart';
+import 'package:app_manager/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,6 +45,7 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
 
   AppManagerUtils? get util;
 
+  /// Do not assign `system` enum.
   E get defaultMode;
 
   bool get overrideSystem => false;
