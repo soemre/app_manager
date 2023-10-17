@@ -10,11 +10,16 @@ class LangCore extends AppManagerCore<AppLangs, LangModel> {
         AppLangs.eng: LangModel(
           title: "App Manager",
           text:
-              "This text will be in different language if you change its mode.",
+              "This text will be in a different language if you change its mode.",
         ),
         AppLangs.tr: LangModel(
           title: "Uygulama Yöneticisi",
           text: "Bu yazı dil modunu değiştirince farklı bir dilde olucak.",
+        ),
+        AppLangs.de: LangModel(
+          title: "App Manager",
+          text:
+              "Dieser Text wird in einer anderen Sprache sein, wenn Sie seinen Modus ändern.",
         ),
         AppLangs.lorem: LangModel(
           title: "Ipsum Officia",
@@ -33,6 +38,7 @@ enum AppLangs {
   system,
   eng,
   tr,
+  de,
   lorem;
 }
 

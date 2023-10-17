@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 context.core<LangCore>().current.title,
@@ -32,146 +33,146 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 16),
 
+              // Status
+              Text(
+                "Theme: ${context.core<ThemeCore>().mode.name}${context.core<ThemeCore>().mode == AppThemes.system ? " (Raw Mode: ${context.core<ThemeCore>().rawMode.name})" : ""} \nLanguage: ${context.core<LangCore>().mode.name} ${context.core<LangCore>().mode == AppLangs.system ? " (Raw Mode: ${context.core<LangCore>().rawMode.name})" : ""} ",
+                style: context.style<TextStyleCore>().text,
+              ),
+
+              const SizedBox(height: 32),
+
               // Lang Mode Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                        context.core<ThemeCore>().current.buttonColor,
-                      ),
-                      padding: const MaterialStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                      ),
-                      elevation: const MaterialStatePropertyAll(0),
-                      shape: const MaterialStatePropertyAll(StadiumBorder())),
-                  onPressed: () => DraggableMenu.open(
-                    context,
-                    DraggableMenu(
-                      ui: const SoftModernDraggableMenu(),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text(
-                              "System",
-                              style: context.style<TextStyleCore>().menuText,
-                            ),
-                            onTap: () => context
-                                .core<LangCore>()
-                                .changeMode(AppLangs.system),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                      context.core<ThemeCore>().current.buttonColor,
+                    ),
+                    padding: const MaterialStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                    ),
+                    elevation: const MaterialStatePropertyAll(0),
+                    shape: const MaterialStatePropertyAll(StadiumBorder())),
+                onPressed: () => DraggableMenu.open(
+                  context,
+                  DraggableMenu(
+                    ui: const SoftModernDraggableMenu(),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            "System",
+                            style: context.style<TextStyleCore>().menuText,
                           ),
-                          ListTile(
-                            title: Text(
-                              "English",
-                              style: context.style<TextStyleCore>().menuText,
-                            ),
-                            onTap: () => context
-                                .core<LangCore>()
-                                .changeMode(AppLangs.eng),
+                          onTap: () => context
+                              .core<LangCore>()
+                              .changeMode(AppLangs.system),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "English",
+                            style: context.style<TextStyleCore>().menuText,
                           ),
-                          ListTile(
-                            title: Text(
-                              "Turkish",
-                              style: context.style<TextStyleCore>().menuText,
-                            ),
-                            onTap: () => context
-                                .core<LangCore>()
-                                .changeMode(AppLangs.tr),
+                          onTap: () =>
+                              context.core<LangCore>().changeMode(AppLangs.eng),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "Turkish",
+                            style: context.style<TextStyleCore>().menuText,
                           ),
-                          ListTile(
-                            title: Text(
-                              "Lorem Ipsum",
-                              style: context.style<TextStyleCore>().menuText,
-                            ),
-                            onTap: () => context
-                                .core<LangCore>()
-                                .changeMode(AppLangs.lorem),
+                          onTap: () =>
+                              context.core<LangCore>().changeMode(AppLangs.tr),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "German",
+                            style: context.style<TextStyleCore>().menuText,
                           ),
-                        ],
-                      ),
+                          onTap: () =>
+                              context.core<LangCore>().changeMode(AppLangs.de),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "Lorem Ipsum",
+                            style: context.style<TextStyleCore>().menuText,
+                          ),
+                          onTap: () => context
+                              .core<LangCore>()
+                              .changeMode(AppLangs.lorem),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Text(
-                    "Change Language Mode",
-                    style: context.style<TextStyleCore>().buttonText,
-                  ),
+                ),
+                child: Text(
+                  "Change Language Mode",
+                  style: context.style<TextStyleCore>().buttonText,
                 ),
               ),
 
               const SizedBox(height: 16),
 
               // Theme Mode Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                        context.core<ThemeCore>().current.buttonColor,
-                      ),
-                      padding: const MaterialStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                      ),
-                      elevation: const MaterialStatePropertyAll(0),
-                      shape: const MaterialStatePropertyAll(StadiumBorder())),
-                  onPressed: () => DraggableMenu.open(
-                    context,
-                    DraggableMenu(
-                      ui: const SoftModernDraggableMenu(),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text(
-                              "System",
-                              style: context.style<TextStyleCore>().menuText,
-                            ),
-                            onTap: () => context
-                                .core<ThemeCore>()
-                                .changeMode(AppThemes.system),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                      context.core<ThemeCore>().current.buttonColor,
+                    ),
+                    padding: const MaterialStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                    ),
+                    elevation: const MaterialStatePropertyAll(0),
+                    shape: const MaterialStatePropertyAll(StadiumBorder())),
+                onPressed: () => DraggableMenu.open(
+                  context,
+                  DraggableMenu(
+                    ui: const SoftModernDraggableMenu(),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            "System",
+                            style: context.style<TextStyleCore>().menuText,
                           ),
-                          ListTile(
-                            title: Text(
-                              "Light",
-                              style: context.style<TextStyleCore>().menuText,
-                            ),
-                            onTap: () => context
-                                .core<ThemeCore>()
-                                .changeMode(AppThemes.light),
+                          onTap: () => context
+                              .core<ThemeCore>()
+                              .changeMode(AppThemes.system),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "Light",
+                            style: context.style<TextStyleCore>().menuText,
                           ),
-                          ListTile(
-                            title: Text(
-                              "Dark",
-                              style: context.style<TextStyleCore>().menuText,
-                            ),
-                            onTap: () => context
-                                .core<ThemeCore>()
-                                .changeMode(AppThemes.dark),
+                          onTap: () => context
+                              .core<ThemeCore>()
+                              .changeMode(AppThemes.light),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "Dark",
+                            style: context.style<TextStyleCore>().menuText,
                           ),
-                          ListTile(
-                            title: Text(
-                              "Custom",
-                              style: context.style<TextStyleCore>().menuText,
-                            ),
-                            onTap: () => context
-                                .core<ThemeCore>()
-                                .changeMode(AppThemes.custom),
+                          onTap: () => context
+                              .core<ThemeCore>()
+                              .changeMode(AppThemes.dark),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "Custom",
+                            style: context.style<TextStyleCore>().menuText,
                           ),
-                        ],
-                      ),
+                          onTap: () => context
+                              .core<ThemeCore>()
+                              .changeMode(AppThemes.custom),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Text(
-                    "Change Theme Mode",
-                    style: context.style<TextStyleCore>().buttonText,
-                  ),
                 ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Status
-              Text(
-                "Theme: ${context.core<ThemeCore>().mode.name}${context.core<ThemeCore>().mode == AppThemes.system ? " (Raw Mode: ${context.core<ThemeCore>().rawMode.name})" : ""} \nLanguage: ${context.core<LangCore>().mode.name} ${context.core<LangCore>().mode == AppLangs.system ? " (Raw Mode: ${context.core<LangCore>().rawMode.name})" : ""} ",
-                style: context.style<TextStyleCore>().text,
+                child: Text(
+                  "Change Theme Mode",
+                  style: context.style<TextStyleCore>().buttonText,
+                ),
               ),
             ],
           ),
