@@ -10,6 +10,11 @@ abstract class AppManagerStyleCore {
   /// Stores the current cores.
   late final AppManagerCoreMap _cores;
 
+  /// Initilizes the style core with the given cores.
+  /// 
+  /// Cores must be the currently being used cores.
+  /// 
+  /// The style core will use the cores.
   void init({required AppManagerCoreMap cores}) {
     _cores = cores;
   }

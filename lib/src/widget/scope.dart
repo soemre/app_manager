@@ -8,8 +8,15 @@ import 'package:flutter/material.dart';
 
 class AppManagerScope extends StatefulWidget {
   final Widget child;
+
+  /// The `config` parameter takes the `AppManagerConfig`
+  /// to customize its features and take the cores as well.
   final AppManagerConfig config;
 
+  /// The `AppManagerScope` widget needs to be placed
+  /// to the top of the pages it will be used on.
+  /// 
+  /// _Before the `MaterialApp` widget is a good place it can be at._
   const AppManagerScope({
     super.key,
     required this.child,
@@ -28,6 +35,11 @@ class _AppManagerScopeState extends State<AppManagerScope> {
     super.initState();
   }
 
+  /// Initilizes cores.
+  ///
+  /// Calles the init() method of the given cores.
+  /// Adds them as listeners.
+  /// And builds the `_cores` map with them.
   void _initCores() {
     if (widget.config.cores == null) return;
 
@@ -40,6 +52,13 @@ class _AppManagerScopeState extends State<AppManagerScope> {
     });
   }
 
+  /// Initilizes style cores.
+  ///
+  /// Calles the init() method of the given style cores
+  /// and passes the current `_cores` map in order them to use it.
+  /// And builds the `_styles` map with them.
+  ///
+  /// It doesn't listen its changes because style cores can't change their mode.
   void _initStyleCores() {
     if (widget.config.styles == null) return;
 
@@ -53,8 +72,10 @@ class _AppManagerScopeState extends State<AppManagerScope> {
     });
   }
 
+  /// Stores cores as values and their types as keys.
   final AppManagerCoreMap _cores = {};
 
+  /// Stores style cores as values and their types as keys.
   final AppManagerStyleCoreMap _styles = {};
 
   @override

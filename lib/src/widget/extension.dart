@@ -1,10 +1,12 @@
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
 
-extension AppSettings on BuildContext {
-  AppManager get _appManager => AppManager.of(this);
+/// The `AppManagerCoreExtensions` extension is used to access
+/// `AppManager`'s core and style methods.
+extension AppManagerCoreExtensions on BuildContext {
+  /// The `core` method let's you to access the current cores.
+  T core<T extends AppManagerCore>() => AppManager.core<T>(this);
 
-  T core<T extends AppManagerCore>() => _appManager.cores[T] as T;
-
-  T style<T extends AppManagerStyleCore>() => _appManager.styles[T] as T;
+  /// The `style` method let's you to access the current style cores.
+  T style<T extends AppManagerStyleCore>() => AppManager.style<T>(this);
 }
