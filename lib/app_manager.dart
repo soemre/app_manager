@@ -13,5 +13,4 @@ export 'src/core/core.dart';
 export 'src/style/style.dart';
 
 // Utils
-export 'src/utils/utils.dart';
-export 'src/utils/theme.dart';
+export 'src/utils/export.dart';
