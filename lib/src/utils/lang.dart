@@ -6,7 +6,7 @@ class AppManagerLangUtil extends AppManagerUtil with WidgetsBindingObserver {
   ///
   /// You can find out the language codes at
   /// [IANA Language Subtag Registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
-  AppManagerLangUtil({required super.onSystemChange});
+  AppManagerLangUtil();
 
   @override
   String get systemMode =>
@@ -14,7 +14,8 @@ class AppManagerLangUtil extends AppManagerUtil with WidgetsBindingObserver {
 
   @override
   void didChangeLocales(List<Locale>? locales) {
-    onSystemChange();
+    if (!isCoreBinded) return;
+    onSystemChange!();
     super.didChangeLocales(locales);
   }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 class AppManagerThemeUtil extends AppManagerUtil with WidgetsBindingObserver {
-  AppManagerThemeUtil({required super.onSystemChange});
+  AppManagerThemeUtil();
 
   @override
   String get systemMode =>
@@ -14,7 +14,8 @@ class AppManagerThemeUtil extends AppManagerUtil with WidgetsBindingObserver {
 
   @override
   void didChangePlatformBrightness() {
-    onSystemChange();
+    if (!isCoreBinded) return;
+    onSystemChange!();
     super.didChangePlatformBrightness();
   }
 

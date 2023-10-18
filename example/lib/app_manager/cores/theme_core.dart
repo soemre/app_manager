@@ -38,7 +38,7 @@ class ThemeCore extends AppManagerCore<AppThemes, ThemeModel> {
       };
 
   @override
-  AppManagerUtils? get util => AppManagerUtils.theme;
+  AppManagerUtil? get util => AppManagerUtil.theme;
 }
 
 enum AppThemes {

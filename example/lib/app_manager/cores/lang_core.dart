@@ -31,7 +31,7 @@ class LangCore extends AppManagerCore<AppLangs, LangModel> {
   AppLangs get defaultMode => AppLangs.eng;
 
   @override
-  AppManagerUtils? get util => AppManagerUtils.lang;
+  AppManagerUtil? get util => AppManagerUtil.lang;
 }
 
 enum AppLangs {

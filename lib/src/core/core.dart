@@ -1,5 +1,4 @@
 import 'package:app_manager/src/utils/app_manager_util.dart';
-import 'package:app_manager/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,15 +29,15 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   ///
   /// _To learn more about using the `AppManagerCore` check out the README file._
   AppManagerCore() {
-    // Create the util.
-    _util ??= util?.create(() => _onSystemChange());
+    // Binds the given util to the core.
+    util?.bindCore(onSystemChange: _onSystemChange);
 
     // Assign Default Mode
     assert(models.containsKey(defaultMode) && defaultMode.name != "system");
     _defaultMode = defaultMode;
 
     // If the util parameter is set, `system` key must exist.
-    if (_util != null) {
+    if (util != null) {
       final E? tempKey = _stringToMode("system");
       assert(tempKey != null,
           "System key must exist when the util parameter is set.");
@@ -46,7 +45,7 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
     }
 
     // Configure main mode.
-    if (_util == null || overrideSystem) {
+    if (util == null || overrideSystem) {
       _mainMode = _defaultMode;
     } else {
       _mainMode = _systemModeEnum;
@@ -60,7 +59,7 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
 
   @override
   void dispose() {
-    _util?.dispose();
+    util?.dispose();
     super.dispose();
   }
 
@@ -75,9 +74,6 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   /// the `overrideSystem` or any utility isn't provided to the core.
   late final E _defaultMode;
 
-  /// Current utility if provided
-  AppManagerUtils? get util;
-
   /// Do not assign `system` enum.
   E get defaultMode;
 
@@ -88,8 +84,8 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
 
   /// The util of the core.
   ///
-  /// Util is optional. But if it is set the `system` keyword should be used as a key of the models map.
-  AppManagerUtil? _util;
+  /// Util is optional. But if it is set, the `system` keyword should be used as a key of the models map.
+  AppManagerUtil? util;
 
   /// Main mode will be used by the app manager
   /// when the current mode is not usable.
@@ -182,14 +178,14 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
 
   /// Returns whether the given mode indicates the special `system` mode or not.
   bool _isSystem(E mode) {
-    return _util != null && mode == _systemModeEnum;
+    return util != null && mode == _systemModeEnum;
   }
 
   /// Returns raw system keys.
   ///
   /// In order to use the util, the raw system keys must be exists in the models map.
   E get _systemMode {
-    final mode = _stringToMode(_util!.systemMode);
+    final mode = _stringToMode(util!.systemMode);
 
     if (!_isModeUsable(mode)) {
       return _defaultMode;
