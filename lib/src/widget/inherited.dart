@@ -1,3 +1,4 @@
+import 'package:app_manager/src/base_core/base_core.dart';
 import 'package:app_manager/src/core/core.dart';
 import 'package:app_manager/src/core/types.dart';
 import 'package:app_manager/src/style/style.dart';
@@ -33,12 +34,17 @@ class AppManager extends InheritedWidget {
   }
 
   /// The `core` method let's you to access the current cores.
-  static T core<T extends AppManagerCore>(BuildContext context) =>
-      AppManager.of(context).cores[T] as T;
+  static T core<T extends AppManagerBaseCore>(BuildContext context) {
+    if (_isSubtype<T, AppManagerCore>()) {
+      return AppManager.of(context).cores[T] as T;
+    }
+    if (_isSubtype<T, AppManagerStyleCore>()) {
+      return AppManager.of(context).styles[T] as T;
+    }
+    throw "$T isn't recognized as an app_manager core.";
+  }
 
-  /// The `style` method let's you to access the current style cores.
-  static T style<T extends AppManagerStyleCore>(BuildContext context) =>
-      AppManager.of(context).styles[T] as T;
+  static bool _isSubtype<S, T>() => <S>[] is List<T>;
 
   @override
   bool updateShouldNotify(AppManager oldWidget) {

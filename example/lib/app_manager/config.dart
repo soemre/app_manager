@@ -5,13 +5,9 @@ import 'package:app_manager_example/app_manager/styles/text_style.dart';
 
 class ManagerConfig extends AppManagerConfig {
   @override
-  List<AppManagerCore> get cores => [
+  List<AppManagerBaseCore>? get cores => [
         ThemeCore(),
         LangCore(),
-      ];
-
-  @override
-  List<AppManagerStyleCore> get styles => [
         TextStyleCore(),
       ];
 }

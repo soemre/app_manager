@@ -1,9 +1,11 @@
+import 'package:app_manager/src/base_core/base_core.dart';
 import 'package:app_manager/src/utils/app_manager_util.dart';
 import 'package:app_manager/src/utils/app_manager_util_options.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
+abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
+    with ChangeNotifier {
   /// The `AppManagerCore` stores enum-model maps and uses one of them as current mode.
   ///
   /// You can change the current mode using the `changeMode` method

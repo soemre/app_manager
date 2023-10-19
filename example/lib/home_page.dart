@@ -21,14 +21,14 @@ class HomePage extends StatelessWidget {
             children: [
               Text(
                 context.core<LangCore>().current.title,
-                style: context.style<TextStyleCore>().title,
+                style: context.core<TextStyleCore>().title,
               ),
               const SizedBox(height: 16),
 
               // Lang util example text
               Text(
                 context.core<LangCore>().current.text,
-                style: context.style<TextStyleCore>().text,
+                style: context.core<TextStyleCore>().text,
               ),
 
               const SizedBox(height: 16),
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
               // Status
               Text(
                 "Theme: ${context.core<ThemeCore>().mode.name}${context.core<ThemeCore>().mode == AppThemes.system ? " (Raw Mode: ${context.core<ThemeCore>().rawMode.name})" : ""} \nLanguage: ${context.core<LangCore>().mode.name} ${context.core<LangCore>().mode == AppLangs.system ? " (Raw Mode: ${context.core<LangCore>().rawMode.name})" : ""} ",
-                style: context.style<TextStyleCore>().text,
+                style: context.core<TextStyleCore>().text,
               ),
 
               const SizedBox(height: 32),
@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "System",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () => context
                               .core<LangCore>()
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "English",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () =>
                               context.core<LangCore>().changeMode(AppLangs.eng),
@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "Turkish",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () =>
                               context.core<LangCore>().changeMode(AppLangs.tr),
@@ -86,7 +86,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "German",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () =>
                               context.core<LangCore>().changeMode(AppLangs.de),
@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "Lorem Ipsum",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () => context
                               .core<LangCore>()
@@ -106,7 +106,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Text(
                   "Change Language Mode",
-                  style: context.style<TextStyleCore>().buttonText,
+                  style: context.core<TextStyleCore>().buttonText,
                 ),
               ),
 
@@ -132,7 +132,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "System",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () => context
                               .core<ThemeCore>()
@@ -141,7 +141,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "Light",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () => context
                               .core<ThemeCore>()
@@ -150,7 +150,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "Dark",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () => context
                               .core<ThemeCore>()
@@ -159,7 +159,7 @@ class HomePage extends StatelessWidget {
                         ListTile(
                           title: Text(
                             "Custom",
-                            style: context.style<TextStyleCore>().menuText,
+                            style: context.core<TextStyleCore>().menuText,
                           ),
                           onTap: () => context
                               .core<ThemeCore>()
@@ -171,7 +171,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Text(
                   "Change Theme Mode",
-                  style: context.style<TextStyleCore>().buttonText,
+                  style: context.core<TextStyleCore>().buttonText,
                 ),
               ),
             ],

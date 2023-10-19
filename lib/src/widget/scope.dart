@@ -15,7 +15,7 @@ class AppManagerScope extends StatefulWidget {
 
   /// The `AppManagerScope` widget needs to be placed
   /// to the top of the pages it will be used on.
-  /// 
+  ///
   /// _Before the `MaterialApp` widget is a good place it can be at._
   const AppManagerScope({
     super.key,
@@ -41,10 +41,10 @@ class _AppManagerScopeState extends State<AppManagerScope> {
   /// Adds them as listeners.
   /// And builds the `_cores` map with them.
   void _initCores() {
-    if (widget.config.cores == null) return;
+    if (widget.config.coreList == null) return;
 
     setState(() {
-      for (AppManagerCore core in widget.config.cores!) {
+      for (AppManagerCore core in widget.config.coreList!) {
         core.init();
         core.addListener(() => setState(() {}));
         _cores.addAll({core.runtimeType: core});
@@ -60,10 +60,10 @@ class _AppManagerScopeState extends State<AppManagerScope> {
   ///
   /// It doesn't listen its changes because style cores can't change their mode.
   void _initStyleCores() {
-    if (widget.config.styles == null) return;
+    if (widget.config.styleCoreList == null) return;
 
     setState(() {
-      for (AppManagerStyleCore style in widget.config.styles!) {
+      for (AppManagerStyleCore style in widget.config.styleCoreList!) {
         style.init(
           cores: _cores,
         );

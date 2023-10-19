@@ -1,3 +1,4 @@
+import 'package:app_manager/src/base_core/base_core.dart';
 import 'package:app_manager/src/core/core.dart';
 import 'package:app_manager/src/core/types.dart';
 
@@ -6,14 +7,14 @@ import 'package:app_manager/src/core/types.dart';
 /// They are just accessable via context and they reflect to the cores state.
 /// So if you change a cores state, the style core will change as well
 /// if it uses at least one of the cores.
-abstract class AppManagerStyleCore {
+abstract class AppManagerStyleCore extends AppManagerBaseCore {
   /// Stores the current cores.
   late final AppManagerCoreMap _cores;
 
   /// Initilizes the style core with the given cores.
-  /// 
+  ///
   /// Cores must be the currently being used cores.
-  /// 
+  ///
   /// The style core will use the cores.
   void init({required AppManagerCoreMap cores}) {
     _cores = cores;
