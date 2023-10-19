@@ -29,12 +29,9 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
       "Default Mode must exist in the modes map and it shouldn't be the same as the system key if an utility is provided.",
     );
 
-    // Assign the current mode. It can reassigned in the `init` method if a mode is stored in the client side.
-    if (_util == null || !useSystemAsDefault) {
-      _mode = defaultMode;
-    } else {
-      _mode = _systemModeKey!;
-    }
+    // Assign _preferedMode to the current mode. It can reassigned in the `init` method
+    // if a mode is stored in the client side or the `savePreferedMode` getter is set to `true`.
+    _mode = _preferedMode;
   }
 
   @override
@@ -47,7 +44,7 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
   E? get _systemModeKey => utilOptions?.system;
 
   /// The provided mode will be used when the `system` mode isn't usable
-  /// and when the client side hasn't got any usable modes stored in their device
+  /// and when the client side hasn't got an usable mode stored in their device
   /// but you can make it use the `system` mode instead by setting the `useSystemAsDefault` to `true`.
   E get defaultMode;
 
@@ -76,6 +73,14 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
   /// SharedPreferences Key.
   String get _prefsKey => "app_manager_core_$runtimeType";
 
+  /// If the `savePreferedMode` is set to `true` and the client hasn't got an usable mode stored,
+  /// the core saves the prefered mode using the `SharedPreferences` package.
+  bool get savePreferedMode => true;
+
+  /// The mode to use when the client hasn't got an usable modes stored.
+  E get _preferedMode =>
+      (_util == null || !useSystemAsDefault) ? defaultMode : _systemModeKey!;
+
   /// It initializes the core.
   ///
   /// It will use the last mode if it's stored in the client side.
@@ -83,7 +88,13 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final E? localMode = _stringToMode(prefs.getString(_prefsKey));
 
-    if (localMode != null) changeMode(localMode, false);
+    if (localMode != null) {
+      // Change the current mode to the localMode
+      await changeMode(localMode, false);
+    } else if (savePreferedMode) {
+      // Save the prefered mode
+      await changeMode(_preferedMode);
+    }
 
     notifyListeners();
   }
