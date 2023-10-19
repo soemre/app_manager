@@ -2,7 +2,7 @@ import 'package:app_manager/app_manager.dart';
 
 class LangCore extends AppManagerCore<AppLangs, LangModel> {
   @override
-  Map<AppLangs, LangModel> get models => {
+  Map<AppLangs, LangModel> get modes => {
         AppLangs.system: LangModel(
           title: "",
           text: "",

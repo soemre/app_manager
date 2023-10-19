@@ -6,7 +6,7 @@ class ThemeCore extends AppManagerCore<AppThemes, ThemeModel> {
   AppThemes get defaultMode => AppThemes.dark;
 
   @override
-  Map<AppThemes, ThemeModel> get models => {
+  Map<AppThemes, ThemeModel> get modes => {
         AppThemes.system: ThemeModel(
           backgroundColor: Colors.red,
           textColor: Colors.white,
