@@ -6,57 +6,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
     with ChangeNotifier {
-  /// The `AppManagerCore` stores enum-model maps and uses one of them as current mode.
+  /// The `AppManagerCore` has different modes, and its mode can change
+  /// by the system with binding it with an utility, or using it's `changeMode` method.
   ///
-  /// You can change the current mode using the `changeMode` method
-  /// or if an utility is provided and the current mode is set to the special `system` mode
-  /// (By special it means it allows system to change its mode.), current mode can change by the system.
-  ///
-  /// To use the `AppManagerCore` create an class and extend the `AppManagerCore`.
-  /// After that you can customize your core with overriding its getters.
-  ///
-  /// Always use generics when creating a core. Because it will ensure the all provided mode enums and models
-  /// are the same type. And therefore, it will return the provided types as well.
-  ///
-  /// The `modes` getter stores the mode-model items. Every provieded key will be considered as a mode
-  /// and every provided value will be considered as an model by the core.
-  ///
-  /// An enum named `system` must be provided when the util getter is set to an core utility.
-  /// The `system` enum will be an special enum to access the system's current mode.
-  ///
-  /// The `defaultMode` getter will be used when the current mode is set to the `system` and
-  /// the provided mode doesn't exist in the core. And the `defaultMode` getter will be used
-  /// when the core couldn't find any modes used in the system before.
-  ///
-  /// _To learn more about using the `AppManagerCore` check out the README file._
+  /// To learn how to use the `AppManagerCore` check out the README.md file.
   AppManagerCore() {
-    // Assign the util
+    // Assign the utility.
     utilOptions = util;
 
-    // Binds the given util to the core.
+    // Bind the given utility to the core.
     _util?.bindCore(onSystemChange: _onSystemChange);
 
-    // If the util parameter is set, `system` key mustn't exist.
+    // Assert the `system` mode key.
     assert(
-      _util == null || !modes.containsKey(_systemModeEnum),
+      _util == null || !modes.containsKey(_systemModeKey),
       "System key mustn't exist in the modes map when the util parameter is set.",
     );
 
-    // Assign Default Mode
+    // Assert the defaultMode.
     assert(
-      modes.containsKey(defaultMode) && defaultMode != _systemModeEnum,
+      modes.containsKey(defaultMode) && defaultMode != _systemModeKey,
       "Default Mode must exist in the modes map and it shouldn't be the same as the system key if an utility is provided.",
     );
 
-    // Assign the _mainMode variable.
+    // Assign the current mode. It can reassigned in the `init` method if a mode is stored in the client side.
     if (_util == null || !useSystemAsDefault) {
-      _mainMode = defaultMode;
+      _mode = defaultMode;
     } else {
-      _mainMode = _systemModeEnum!;
+      _mode = _systemModeKey!;
     }
-
-    // Configure the current mode. It will be redefined in the init function again.
-    _mode = _mainMode;
   }
 
   @override
@@ -65,114 +43,112 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
     super.dispose();
   }
 
-  /// System mode enum variable
-  ///
-  /// This variable must exist
-  /// to get the system variable without searching it.
-  E? get _systemModeEnum => utilOptions?.system;
+  /// System Mode Key
+  E? get _systemModeKey => utilOptions?.system;
 
-  /// The provided mode will be used when the system mode isn't usable
-  /// and the main mode will be the default mode if the `useSystemAsDefault` is set to `false`
-  /// or any utility isn't provided to the core.
+  /// The provided mode will be used when the `system` mode isn't usable
+  /// and when the client side hasn't got any usable modes stored in their device
+  /// but you can make it use the `system` mode instead by setting the `useSystemAsDefault` to `true`.
   E get defaultMode;
 
-  /// Whether the `system` will be overriden or not.
+  /// The `useSystemAsDefault` getter makes the core to use the `system` mode
+  /// instead of the `default` mode if the client hasn't used any modes before.
   ///
-  /// It will be functional if an utility provided to the `core`.
+  /// It will work if an utility provided to the `core`.
   bool get useSystemAsDefault => true;
 
-  /// The util of the core.
-  ///
-  /// Util is optional. But if it is set, the `system` keyword shouldn't be used as a key of the modes map.
+  /// The utility of the core.
   AppManagerUtil? get _util => utilOptions?.util;
 
   /// Always assign the utility here after taking it with the util geter
-  /// because it will prevent it creating intances of it.
+  /// because it will prevent creating mulltiple intances of it.
   late final AppManagerUtilOptions<E>? utilOptions;
 
-  /// Takes the `AppManagerUtilOptions` options to configure the core's utility.
+  /// The `util` getter takes an `AppManagerUtilOptions` to configure the core's utility.
+  ///
+  /// Providing an utiliy is optional.
+  ///
+  /// Its `system` parameter takes enum to use as the `system` mode key.
+  /// This will be used to access the system's current mode
+  /// and this enum shouldn't exist in the `modes` map as a key and used as default key.
   AppManagerUtilOptions<E>? get util;
 
-  /// Main mode will be used by the app manager
-  /// when the current mode is not usable.
-  late final E _mainMode;
-
-  /// The key to be store the app's current mode in the local storage with Shared Preferences.
+  /// SharedPreferences Key.
   String get _prefsKey => "app_manager_core_$runtimeType";
 
-  /// Initialize the core's mode with the stored preferences.
+  /// It initializes the core.
   ///
-  /// It will throw if the default mode isn't set in the modes map.
+  /// It will use the last mode if it's stored in the client side.
   Future<void> init() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final E? localMode = _stringToMode(prefs.getString(_prefsKey));
 
-    if (localMode != null) changeMode(localMode);
+    if (localMode != null) changeMode(localMode, false);
 
     notifyListeners();
   }
 
-  /// Returns the current model of the core.
+  /// Returns the model of the current mode.
   T get current => _isCurrentModeSystem ? _systemModel : modes[_mode]!;
 
   /// Current Mode
-  /// DO NOT ASSIGN A MODE THAT DOESN'T EXIST IN THE MODELS MAP
+  ///
+  /// Do not assign a mode that doesn't exist in the `models` map.
   late E _mode;
 
   /// Current mode of the core.
   E get mode => _mode;
 
-  /// Return the underlying mode.
+  /// It returns the raw (underlying) mode.
   ///
-  /// For instance, if the mode is `system`
-  /// and a util is being used
-  /// it will return `dark` or `light`.
+  /// For instance, if the current mode is `system`, it will return the mode
+  /// that's being used from the `modes` map by the utility.
   E get rawMode => _isCurrentModeSystem ? _systemMode : _mode;
 
   /// Changes the mode to given mode.
   ///
-  /// Throws if the given mode doesn't exists in the modes map.
+  /// Throws if the given `mode key` doesn't exist in the `modes` map or it's not the `system` mode key.
+  ///
+  /// In order to the `system` mode key to work, an utility must be provided to the core.
   Future<void> changeMode(E mode, [bool saveChanges = true]) async {
     assert(
       _isModeUsable(mode),
       "The given mode doesn't exists in the modes map.",
     );
 
+    // Save the mode using the SharedPreferences package to the client.
     if (saveChanges) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString(_prefsKey, mode.name);
     }
 
+    // Change the mode.
     _mode = mode;
 
     notifyListeners();
   }
 
-  /// Notify the listeners when the system's raw mode changes.
+  /// It notifies the listeners when the system's mode changes.
   void _onSystemChange() {
-    // There is no need to notify if the current mode is system.
+    // There is no need to notify if the current mode isn't system.
     if (!_isCurrentModeSystem) return;
 
-    // Notify
     notifyListeners();
   }
 
-  /// Returns whether the current core uses the system mode of an util or not.
-  ///
-  /// If the core doesn't use the system mode of an util, the `system` key will be a regular key.
-  bool get _isCurrentModeSystem => _util != null && _mode == _systemModeEnum;
+  /// Returns whether the current mode is the system mode or not.
+  bool get _isCurrentModeSystem => _util != null && _mode == _systemModeKey;
 
-  /// Returns raw system keys.
-  ///
-  /// In order to use the util mode, the raw system keys must be exists in the modes map.
+  /// Returns raw system keys if they exist in the `modes` map.
+  /// If they don't it returns the default mode instead.
   E get _systemMode => _stringToMode(_util?.systemMode) ?? defaultMode;
 
-  /// Returns the system model from the modes map.
+  /// Returns the matching `system model` from the `modes` map.
   ///
-  /// The models with the raw system keys must be exists in the modes map.
+  /// The models with the raw system keys (It's what utility's looking for.) must exists in the `modes` map.
   T get _systemModel => modes[_systemMode]!;
 
-  /// Returns the matching `mode enum` if the enum exists in the `modes` map.
+  /// Returns the matching `mode key` if it exists in the `modes` map.
   E? _stringToMode(String? string) {
     if (string == null) return null;
     try {
@@ -182,25 +158,19 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
     }
   }
 
-  /// Returns whether the given mode exists in the modes map or not.
+  /// Returns whether the given mode is usable or not.
   bool _isModeUsable(E? mode) {
     if (mode == null) return false;
-    if (mode == _systemModeEnum) return true;
+    if (mode == _systemModeKey) return true;
     return modes.containsKey(mode);
   }
 
-  /// Modes map
-  ///
   /// Stores the modes
   ///
-  /// To use it create an model class and an enum.
+  /// To use it, create an model class and an enum.
   /// Set the enums as keys and the model instances as values of the map.
+  /// We will refer to these enums as mode keys and the key-value pairs as modes.
   ///
-  /// The enum you created will be represent the modes of the core.
-  ///
-  /// **About the enum named `system`:** If an utility is provided to the core,
-  /// the enum named `system` will be used as an special key to access the system's current mode.
-  ///
-  /// Using all the enums as keys is recommended to avoid using a not existing mode.
+  /// It is recommended to use all the enums as keys to avoid attempting to use a non-existent mode.
   Map<E, T> get modes;
 }
