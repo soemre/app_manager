@@ -28,6 +28,9 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   ///
   /// _To learn more about using the `AppManagerCore` check out the README file._
   AppManagerCore() {
+    // Assign the util
+    utilOptions = util;
+
     // Binds the given util to the core.
     _util?.bindCore(onSystemChange: _onSystemChange);
 
@@ -42,11 +45,10 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
       modes.containsKey(defaultMode) && defaultMode != _systemModeEnum,
       "Default Mode must exist in the modes map and it shouldn't be the same as the system key if an utility is provided.",
     );
-    _defaultMode = defaultMode;
 
     // Assign the _mainMode variable.
     if (_util == null || !useSystemAsDefault) {
-      _mainMode = _defaultMode;
+      _mainMode = defaultMode;
     } else {
       _mainMode = _systemModeEnum!;
     }
@@ -65,14 +67,11 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   ///
   /// This variable must exist
   /// to get the system variable without searching it.
-  E? get _systemModeEnum => util?.system;
+  E? get _systemModeEnum => utilOptions?.system;
 
   /// The provided mode will be used when the system mode isn't usable
   /// and the main mode will be the default mode if the `useSystemAsDefault` is set to `false`
   /// or any utility isn't provided to the core.
-  late final E _defaultMode;
-
-  /// Do not assign `system` enum.
   E get defaultMode;
 
   /// Whether the `system` will be overriden or not.
@@ -82,9 +81,14 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
 
   /// The util of the core.
   ///
-  /// Util is optional. But if it is set, the `system` keyword should be used as a key of the modes map.
-  AppManagerUtil? get _util => util?.util;
+  /// Util is optional. But if it is set, the `system` keyword shouldn't be used as a key of the modes map.
+  AppManagerUtil? get _util => utilOptions?.util;
 
+  /// Always assign the utility here after taking it with the util geter
+  /// because it will prevent it creating intances of it.
+  late final AppManagerUtilOptions<E>? utilOptions;
+
+  /// Takes the `AppManagerUtilOptions` options to configure the core's utility.
   AppManagerUtilOptions<E>? get util;
 
   /// Main mode will be used by the app manager
@@ -159,7 +163,7 @@ abstract class AppManagerCore<E extends Enum, T> extends ChangeNotifier {
   /// Returns raw system keys.
   ///
   /// In order to use the util mode, the raw system keys must be exists in the modes map.
-  E get _systemMode => _stringToMode(_util?.systemMode) ?? _defaultMode;
+  E get _systemMode => _stringToMode(_util?.systemMode) ?? defaultMode;
 
   /// Returns the system model from the modes map.
   ///

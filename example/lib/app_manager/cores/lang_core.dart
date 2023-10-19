@@ -6,7 +6,7 @@ class LangCore extends AppManagerCore<AppLangs, LangModel> {
 
   @override
   AppManagerUtilOptions<AppLangs>? get util => AppManagerUtilOptions(
-        util: AppManagerUtil.theme,
+        util: AppManagerUtil.lang,
         system: AppLangs.system,
       );
 

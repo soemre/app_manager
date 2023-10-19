@@ -14,8 +14,7 @@ class AppManagerThemeUtil extends AppManagerUtil with WidgetsBindingObserver {
 
   @override
   void didChangePlatformBrightness() {
-    if (!isCoreBinded) return;
-    onSystemChange!();
+    if (isCoreBinded) onSystemChange!();
     super.didChangePlatformBrightness();
   }
 
