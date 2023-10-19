@@ -2,11 +2,16 @@ import 'package:app_manager/app_manager.dart';
 
 class LangCore extends AppManagerCore<AppLangs, LangModel> {
   @override
+  AppLangs get defaultMode => AppLangs.eng;
+
+  @override
+  AppManagerUtilOptions<AppLangs>? get util => AppManagerUtilOptions(
+        util: AppManagerUtil.theme,
+        system: AppLangs.system,
+      );
+
+  @override
   Map<AppLangs, LangModel> get modes => {
-        AppLangs.system: LangModel(
-          title: "",
-          text: "",
-        ),
         AppLangs.eng: LangModel(
           title: "App Manager",
           text:
@@ -26,12 +31,6 @@ class LangCore extends AppManagerCore<AppLangs, LangModel> {
           text: "Consectetur in incididunt ut velit aute anim laboris irure.",
         ),
       };
-
-  @override
-  AppLangs get defaultMode => AppLangs.eng;
-
-  @override
-  AppManagerUtil? get util => AppManagerUtil.lang;
 }
 
 enum AppLangs {

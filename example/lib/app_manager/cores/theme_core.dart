@@ -6,14 +6,13 @@ class ThemeCore extends AppManagerCore<AppThemes, ThemeModel> {
   AppThemes get defaultMode => AppThemes.dark;
 
   @override
+  AppManagerUtilOptions<AppThemes>? get util => AppManagerUtilOptions(
+        util: AppManagerUtil.theme,
+        system: AppThemes.system,
+      );
+
+  @override
   Map<AppThemes, ThemeModel> get modes => {
-        AppThemes.system: ThemeModel(
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          buttonColor: Colors.white,
-          buttonTextColor: Colors.red,
-          menuTextColor: Colors.white,
-        ),
         AppThemes.light: ThemeModel(
           backgroundColor: Colors.white,
           textColor: Colors.blue,
@@ -36,9 +35,6 @@ class ThemeCore extends AppManagerCore<AppThemes, ThemeModel> {
           menuTextColor: Colors.white,
         ),
       };
-
-  @override
-  AppManagerUtil? get util => AppManagerUtil.theme;
 }
 
 enum AppThemes {
