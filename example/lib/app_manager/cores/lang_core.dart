@@ -27,7 +27,7 @@ class LangCore extends AppManagerCore<AppLangs, LangModel> {
               "Dieser Text wird in einer anderen Sprache sein, wenn Sie seinen Modus ändern.",
         ),
         AppLangs.lorem: LangModel(
-          title: "Ipsum Officia",
+          title: "Lorem Ipsum",
           text: "Consectetur in incididunt ut velit aute anim laboris irure.",
         ),
       };
