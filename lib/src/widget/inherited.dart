@@ -1,5 +1,5 @@
 import 'package:app_manager/src/base_core/base_core.dart';
-import 'package:app_manager/src/base_core/types.dart';
+import 'package:app_manager/src/types.dart';
 import 'package:flutter/material.dart';
 
 class AppManager extends InheritedWidget {
@@ -10,12 +10,12 @@ class AppManager extends InheritedWidget {
   const AppManager({
     super.key,
     required Widget child,
-    required AppManagerCoreMap cores,
+    required AppManagerBaseCoreMap cores,
   })  : _cores = cores,
         super(child: child);
 
   /// Current Cores
-  final AppManagerCoreMap _cores;
+  final AppManagerBaseCoreMap _cores;
 
   static AppManager _of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<AppManager>();

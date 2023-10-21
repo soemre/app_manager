@@ -1,6 +1,6 @@
 import 'package:app_manager/src/base_core/base_core.dart';
 import 'package:app_manager/src/core/core.dart';
-import 'package:app_manager/src/base_core/types.dart';
+import 'package:app_manager/src/types.dart';
 
 /// Style Cores don't have any modes, therefore they are not changable.
 ///

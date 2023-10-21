@@ -1,6 +1,6 @@
+import 'package:app_manager/src/types.dart';
 import 'package:app_manager/src/config/config.dart';
 import 'package:app_manager/src/core/core.dart';
-import 'package:app_manager/src/base_core/types.dart';
 import 'package:app_manager/src/style/style.dart';
 import 'package:app_manager/src/widget/inherited.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +66,7 @@ class _AppManagerScopeState extends State<AppManagerScope> {
         style.init(
           cores: _cores,
         );
-        _cores.addAll({style.runtimeType: style});
+        _styles.addAll({style.runtimeType: style});
       }
     });
   }
@@ -74,10 +74,19 @@ class _AppManagerScopeState extends State<AppManagerScope> {
   /// Stores cores as values and their types as keys.
   final AppManagerCoreMap _cores = {};
 
+  /// Stores style cores as values and their types as keys.
+  final AppManagerStyleCoreMap _styles = {};
+
+  /// Returns a map inclues all the cores and the style cores.
+  AppManagerBaseCoreMap get _getAllCores => {
+        ..._cores,
+        ..._styles,
+      };
+
   @override
   Widget build(BuildContext context) {
     return AppManager(
-      cores: _cores,
+      cores: _getAllCores,
       child: widget.child,
     );
   }
