@@ -1,5 +1,5 @@
 
-<img src="readme-assets/app_manager.png" style="display: block; margin-left: auto; margin-right: auto;">
+<img src="https://github.com/emresoysuren/app_manager/blob/main/readme-assets/app_manager.png?raw=true" style="display: block; margin-left: auto; margin-right: auto;">
 
 <p align="center">
   <a href="https://pub.dev/packages/app_manager">

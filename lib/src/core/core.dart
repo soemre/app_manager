@@ -77,6 +77,9 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
   /// the core saves the prefered mode using the `SharedPreferences` package.
   bool get savePreferedMode => true;
 
+  /// Save the core's mode locally and use it if a mode is saved locally.
+  bool get useLocal => true;
+
   /// The mode to use when the client hasn't got an usable modes stored.
   E get _preferedMode =>
       (_util == null || !useSystemAsDefault) ? defaultMode : _systemModeKey!;
@@ -85,18 +88,20 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
   ///
   /// It will use the last mode if it's stored in the client side.
   Future<void> init() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final E? localMode = _stringToMode(prefs.getString(_prefsKey));
+    if (useLocal) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final E? localMode = _stringToMode(prefs.getString(_prefsKey));
 
-    if (localMode != null) {
-      // Change the current mode to the localMode
-      await changeMode(localMode, false);
-    } else if (savePreferedMode) {
-      // Save the prefered mode
-      await changeMode(_preferedMode);
+      if (localMode != null) {
+        // Change the current mode to the localMode
+        await changeMode(localMode, false);
+      } else if (savePreferedMode) {
+        // Save the prefered mode
+        await changeMode(_preferedMode);
+      }
+
+      notifyListeners();
     }
-
-    notifyListeners();
   }
 
   /// Returns the model of the current mode.
@@ -121,14 +126,16 @@ abstract class AppManagerCore<E extends Enum, T> extends AppManagerBaseCore
   /// Throws if the given `mode key` doesn't exist in the `modes` map or it's not the `system` mode key.
   ///
   /// In order to the `system` mode key to work, an utility must be provided to the core.
+  ///
+  /// The `saveChanges` argument saves the mode locally when both the `storeUserMode` getter and the `saveChanges` argument are set to `true`.
   Future<void> changeMode(E mode, [bool saveChanges = true]) async {
     assert(
       _isModeUsable(mode),
       "The given mode doesn't exists in the modes map.",
     );
 
-    // Save the mode using the SharedPreferences package to the client.
-    if (saveChanges) {
+    // Save the mode using the SharedPreferences package locally.
+    if (useLocal && saveChanges) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString(_prefsKey, mode.name);
     }
