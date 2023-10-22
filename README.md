@@ -3,10 +3,10 @@
 
 <p align="center">
   <a href="https://pub.dev/packages/app_manager">
-    <img src="https://img.shields.io/badge/pub-v0.1.0-%237f7eff?style=flat&logo=flutter">
+    <img src="https://img.shields.io/badge/pub-v0.1.1-%237f7eff?style=flat&logo=flutter">
   </a>
   <a href="https://github.com/emresoysuren/app_manager">
-    <img src="https://img.shields.io/badge/GitHub-v0.1.0-%237f7eff?style=flat&logo=github">
+    <img src="https://img.shields.io/badge/GitHub-v0.1.1-%237f7eff?style=flat&logo=github">
   </a>
 </p>
 

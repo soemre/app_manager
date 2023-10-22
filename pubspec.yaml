@@ -1,6 +1,6 @@
 name: app_manager
 description: A lightweight Flutter package that simplifies the customization of Flutter apps.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/emresoysuren/app_manager
 
 environment:
