@@ -23,6 +23,8 @@ And much more...
 
 Explore the [Example App](https://github.com/emresoysuren/app_manager/tree/main/example) to see practical usage examples.
 
+You can show your support by starring it on GitHub and giving it a like on pub.dev. You can also check out [my other packages on pub.dev](https://pub.dev/publishers/emresoysuren.com/packages).
+
 # Table of Contents
 - [Flutter App Manager (app_manager)](#flutter-app-manager-app_manager)
 - [Getting Started](#getting-started)
@@ -363,3 +365,35 @@ context.core<YourCore>().changeMode(YourCoreModes.yourMode, false); // This mode
 ```
 
 ## Creating Custom Utilities
+
+You can create your own utilities by extending the `AppManagerUtil` class.
+
+```dart
+class YourUtil extends AppManagerUtil {}
+```
+
+The `AppManagerUtil` requires only one override, which is the `systemMode` getter.
+
+The `systemMode` getter accepts a string to inform the core about the system's current mode. The returned string will be used to search for the corresponding mode in the `modes` map. The core will use a mode if the name of its `mode key` (enum) matches the returned string. If no matches are found, it will use the `default mode` instead.
+
+```dart
+class YourUtil extends AppManagerUtil {
+  @override
+  String get systemMode => isMode1Active ? "mode1" : "mode2";
+}
+```
+
+After that, you need to inform the core by calling the `onSystemChange` method of the `AppManagerUtil`. This method informs the core, and after that, the core will use the `systemMode` getter to access the name of the current mode of the system. Before calling the `onSystemChange` method, always use the `isCoreBound` getter to check if it is safe to use `onSystemChange`.
+
+```dart
+class YourUtil extends AppManagerUtil {
+  @override
+  String get systemMode => isMode1Active ? "mode1" : "mode2";
+
+  void didChangePlatformMode() {
+    if (isCoreBound) onSystemChange!(); // Use it like this
+  }
+}
+```
+
+Lastly, you can use your utility to bind with a core by passing it to the `util` parameter of its utility options, as we've discussed in the [Binding Utilities with Cores](#3-binding-utilities-with-cores) chapter.

@@ -1,7 +1,7 @@
 import 'package:app_manager/src/utils/app_manager_util.dart';
 
 class AppManagerUtilOptions<E extends Enum> {
-  /// The `util` parameter takes an utility and this utility will be binded with the core.
+  /// The `util` parameter takes an utility and this utility will be bound with the core.
   final AppManagerUtil util;
 
   /// The `system` parameter takes enum to use as the `system` mode key.

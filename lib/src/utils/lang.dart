@@ -15,7 +15,7 @@ class AppManagerLangUtil extends AppManagerUtil with WidgetsBindingObserver {
 
   @override
   void didChangeLocales(List<Locale>? locales) {
-    if (isCoreBinded) onSystemChange!();
+    if (isCoreBound) onSystemChange!();
     super.didChangeLocales(locales);
   }
 

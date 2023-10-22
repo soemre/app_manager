@@ -18,10 +18,10 @@ abstract class AppManagerUtil {
   String get systemMode;
 
   /// Executed when the class initilizes.
-  void init();
+  void init() {}
 
   /// Executed when the class disposes.
-  void dispose();
+  void dispose() {}
 
   /// Binds the util with the core.
   void bindCore({
@@ -30,8 +30,8 @@ abstract class AppManagerUtil {
     this.onSystemChange = onSystemChange;
   }
 
-  /// Returns whether the core binded with the util by calling the bindCore or not.
-  bool get isCoreBinded => onSystemChange != null;
+  /// Returns whether the core bound with the util by calling the bindCore or not.
+  bool get isCoreBound => onSystemChange != null;
 
   /// Executed when the current system mode changes.
   void Function()? onSystemChange;
